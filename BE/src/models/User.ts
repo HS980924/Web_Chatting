@@ -1,55 +1,91 @@
-import { DataTypes, Model, Sequelize } from "sequelize";
+import { DataTypes, Model } from "sequelize";
 
-interface MotionsEmpl {
-    user_id: number,
-    email: string,
-    password: string,
-    username: string,
-    // created_at:
-    // modified_at: 
-    // deleted_at:
-
+interface UserAttributes {
+    user_id: number;
+    email: string;
+    password: string;
+    username: string;
+    profileImgUrl: string;
+    introduce: string;
 }
 
-export class User extends Model{}
+export default class User extends Model<UserAttributes> {
+    declare user_id: number;
+    declare email: string;
+    declare password: string;
+    declare username: string;
+    declare profileImgUrl: string;
+    declare introduce: string;
+}
 
-User.init({
-    user_id:{
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    username:{
-        type: DataTypes.STRING(20),
-        allowNull: false,
-    },
-    email:{
-        type: DataTypes.STRING(100),
-        allowNull:false,
-    },
-    password:{
-        type: DataTypes.STRING(150),
-        allowNull:false,
-    },
-    created_at:{
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false,
-    },  
-    modified_at:{
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false,
-    },
-    deleted_at:{
-        type: DataTypes.DATE,
-        allowNull: true,
-    }
-},{
-    sequelize,
-    modelName: 'User',
-    tableName: 'user',
-    charset: 'utf8',
-    freezeTableName: true
-});
+// module.exports = (sequelize: any, DataTypes: any) => {
+//     class User extends Model<UserAttributes> implements UserAttributes{
+
+//         user_id!: number;
+//         email!: string;
+//         password!: string;
+//         username!: string;
+//         profileImgUrl!: string;
+//         introduce!: string;
+        
+//         static associate(models: any){
+//             User.hasMany(models.Participant, {
+//                 foreignKey: 'user_id',
+//             });
+
+//             User.hasMany(models.Chatting,{
+//                 foreignKey: 'user_id',
+//             });
+
+//             User.hasMany(models.Friends, {
+//                 foreignKey: "user_id",
+//             });
+
+//             User.hasMany(models.Friends, {
+//                 foreignKey: 'friend_id'
+//             });
+//         }
+//     }
+//     User.init({
+//         user_id:{
+//             type: DataTypes.INTEGER.UNSIGNED,
+//             allowNull: false,
+//             autoIncrement: true,
+//             primaryKey: true,
+//         },
+//         username:{
+//             type: DataTypes.STRING(20),
+//             allowNull: false,
+//         },
+//         email:{
+//             type: DataTypes.STRING(40),
+//             allowNull:false,
+//             unique: true,
+//         },
+//         password:{
+//             type: DataTypes.STRING(150),
+//             allowNull:false,
+//         },
+//         profileImgUrl:{
+//             type: DataTypes.STRING(150),
+//             allowNull:true,
+//         },
+//         introduce:{
+//             type: DataTypes.STRING(20),
+//             allowNull:true,
+//         }
+//     },{
+//         sequelize,
+//         modelName: 'User',
+//         tableName: 'user',
+//         charset: 'utf8',
+//         freezeTableName: true,
+//         timestamps: true,
+//         paranoid: true,
+//         underscored: true,
+//     });
+
+//     return User;
+// }
+
+
