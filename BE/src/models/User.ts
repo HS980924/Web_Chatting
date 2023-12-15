@@ -1,12 +1,12 @@
 import { DataTypes, Model } from "sequelize";
 
 interface UserAttributes {
-    user_id: number;
+    user_id: number | null;
     email: string;
     password: string;
     username: string;
-    profileImgUrl: string;
-    introduce: string;
+    profileImgUrl: string | null;
+    introduce: string | null;
 }
 
 export default class User extends Model<UserAttributes> {

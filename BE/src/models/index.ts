@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
 import { Config } from "../types/types";
+import bcrypt from 'bcrypt';
 import ConfigData from "../config/config";
 import User from "./User";
 import Room from "./Room";
@@ -49,6 +50,9 @@ export function init(): Sequelize{
       password:{
           type: DataTypes.STRING(150),
           allowNull:false,
+          set(value:string) {
+            this.setDataValue('password',bcrypt.hashSync(value, Number(process.env.SALT_ROUNDS)));
+          }
       },
       profileImgUrl:{
           type: DataTypes.STRING(150),
