@@ -1,4 +1,4 @@
-import express, { Request, Response, json, urlencoded} from 'express';
+import express, { Request, Response, json, urlencoded } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import * as DB from "./models";

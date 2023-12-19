@@ -1,9 +1,9 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
-import { validationCheckError } from '../middlewears/signupValidator';
+import { validationCheckError } from '../middlewears/validationCheck';
 import authController from '../controllers/authController';
 
-const router: Router = Router();
+const router: Router = Router();``
 
 router.post('/signup',[
     body('email').isEmail(),
