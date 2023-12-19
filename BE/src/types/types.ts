@@ -14,3 +14,8 @@ export interface signUpType {
   password: string,
   username: string
 }
+
+export interface loginType{
+  email: string,
+  password: string,
+}
