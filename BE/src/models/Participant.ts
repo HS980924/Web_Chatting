@@ -1,11 +1,15 @@
-import { Model, DataTypes } from 'sequelize';
+import { Model } from 'sequelize';
 
 interface ParticipantAttributes{
     id: number;
+    room_id: number;
+    user_id: number;
 }
 
 export default class Participant extends Model<ParticipantAttributes>{
     declare id: number;
+    declare room_id: number;
+    declare user_id: number;
 }
 
     // static associate(db: any){

@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import cors from 'cors';
 import * as DB from "./models";
 import auth from './routes/authRouter';
+import user from './routes/userRouter';
+import friend from './routes/friendRouter';
 
 const app: express.Application = express();
 
@@ -13,6 +15,8 @@ app.use(urlencoded({extended:true}));
 app.use(morgan('dev'));
 
 app.use('/api/auth',auth);
+app.use('/api/user',user);
+app.use('/api/friend',friend);
 
 
 const sequelize = DB.init();

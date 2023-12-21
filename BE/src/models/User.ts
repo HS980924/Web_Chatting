@@ -6,6 +6,7 @@ interface UserAttributes {
     password: string;
     username: string;
     profileImgUrl: string | null;
+    backgroundImgUrl: string | null;
     introduce: string | null;
 }
 
@@ -15,6 +16,7 @@ export default class User extends Model<UserAttributes> {
     declare password: string;
     declare username: string;
     declare profileImgUrl: string;
+    declare backgroundImgUrl: string 
     declare introduce: string;
 }
 

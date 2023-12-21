@@ -58,6 +58,10 @@ export function init(): Sequelize{
           type: DataTypes.STRING(150),
           allowNull:true,
       },
+      backgroundImgUrl:{
+        type: DataTypes.STRING(150),
+        allowNull:true,
+      },
       introduce:{
           type: DataTypes.STRING(20),
           allowNull:true,
@@ -123,7 +127,16 @@ export function init(): Sequelize{
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-      }},{
+      },
+      user_id:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+      },
+      room_id:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+      },
+      },{
         sequelize,
         modelName:"Participant",
         tableName:"participant",
@@ -137,7 +150,15 @@ export function init(): Sequelize{
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
-      }
+      },
+      friend_id:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
+      user_id:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+      },
       },{
         sequelize,
         modelName: "Friends",

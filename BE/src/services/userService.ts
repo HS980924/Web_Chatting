@@ -15,7 +15,8 @@ export const read_UserEmail = async (email:string) => {
 export const read_UserId = async (user_id: number) =>{
     try{
         const userInfo = await User.findOne({
-            where: { user_id:user_id }
+            where: { user_id:user_id },
+            attributes: { exclude: ['password']}
         });
         return userInfo;
     }catch(e){
@@ -51,6 +52,20 @@ export const findOrCreate_User = async (body: any) => {
         });
 
         return created;
+    }catch(e){
+        throw e;
+    }
+}
+
+export const read_UserAllList = async(page: number, size: number) => {
+    try{
+        const userAllList = await User.findAll({
+            offset: page,
+            limit: size,
+            attributes: ["user_id", "email", "username", "profileImgUrl", "introduce"],
+            order: [['username', 'ASC']]
+        });
+        return userAllList;
     }catch(e){
         throw e;
     }

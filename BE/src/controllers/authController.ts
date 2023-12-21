@@ -28,13 +28,15 @@ const login = async(req: Request, res: Response, next:NextFunction)  => {
             const checkPassword: boolean = await bcrypt.compare(password, userInfo.password);
 
             if(checkPassword){
-                const token = await jwtSign(userInfo.user_id);
+                const access = await jwtSign(userInfo.user_id);
                 const refresh = await refreshJwtSign();
-                res.cookie("accessToken",token,{httpOnly: true});
+                res.cookie("accessToken",access,{httpOnly: true});
                 res.cookie("refreshToken",refresh,{httpOnly: true});
-                return res.status(200).json({status: 200, msg:"로그인에 성공하셨습니다."});
-                // res.status(200).redirect("/");
-                // 토큰 전달 및 로그인 성공 메시지 리다이렉트 페이지(메인 홈 or 채팅 방);
+                const token = {
+                    accessToken: access,
+                    refreshToken: refresh,
+                }
+                return res.status(200).json({ status: 200, msg:"로그인에 성공하셨습니다.", data:token});
             }else{
                 return res.status(401).json({status:401, msg:"비밀번호가 일치하지 않습니다."});
             }

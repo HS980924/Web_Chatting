@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 
 interface RoomAttributes{
-    room_id: number;
+    room_id: number | null;
     title: string;
 }
 
