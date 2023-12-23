@@ -4,12 +4,18 @@ interface ParticipantAttributes{
     id: number;
     room_id: number;
     user_id: number;
+    room_title: string;
+    not_read_messageCnt: number;
+    last_read_messageId: number;
 }
 
 export default class Participant extends Model<ParticipantAttributes>{
     declare id: number;
     declare room_id: number;
     declare user_id: number;
+    declare room_title: string;
+    declare not_read_messageCnt: number;
+    declare last_read_messageId: number;
 }
 
     // static associate(db: any){

@@ -148,6 +148,18 @@ export function init(): Sequelize{
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: true,
       },
+      room_title:{
+        type: DataTypes.STRING(25),
+        allowNull: true,
+      },
+      not_read_messageCnt:{
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      last_read_messageId:{
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: true,
+      },
       },{
         sequelize,
         modelName:"Participant",
