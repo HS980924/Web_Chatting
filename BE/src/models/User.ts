@@ -16,7 +16,7 @@ export default class User extends Model<UserAttributes> {
     declare password: string;
     declare username: string;
     declare profileImgUrl: string;
-    declare backgroundImgUrl: string 
+    declare backgroundImgUrl: string;
     declare introduce: string;
 }
 
