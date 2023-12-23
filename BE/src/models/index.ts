@@ -87,6 +87,14 @@ export function init(): Sequelize{
       title:{
           type: DataTypes.STRING(100),
           allowNull: false,
+      },
+      identifier: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      last_message: {
+        type: DataTypes.TEXT,
+        allowNull: true
       }
     },{ 
         sequelize,

@@ -3,11 +3,15 @@ import { Model, DataTypes } from 'sequelize';
 interface RoomAttributes{
     room_id: number | null;
     title: string;
+    identifier: string;
+    last_message: string;
 }
 
 export default class Room extends Model<RoomAttributes> {
     declare room_id: number;
     declare title: string;
+    declare identifier: string;
+    declare last_message: string;
 }
 // module.exports = (sequelize: any, DataTypes: any) => {
 //     class Room extends Model<RoomAttributes> implements RoomAttributes{
