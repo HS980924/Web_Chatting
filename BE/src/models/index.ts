@@ -171,6 +171,10 @@ export function init(): Sequelize{
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
       },
+      friend_name: {
+        type: DataTypes.STRING(15),
+        allowNull: true,
+      }
       },{
         sequelize,
         modelName: "Friends",

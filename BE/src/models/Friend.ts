@@ -4,12 +4,14 @@ interface FriendsAttributes{
     id: number | null;
     friend_id: number;
     user_id: number;
+    friend_name: string;
 }
 
 export default class Friends extends Model<FriendsAttributes>{
     declare id: number;
     declare friend_id: number;
     declare user_id: number;
+    declare friend_name: string;
 }
 
 // module.exports = (sequelize: any, DataTypes: any) => {
