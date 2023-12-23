@@ -109,6 +109,10 @@ export function init(): Sequelize{
       message:{
           type: DataTypes.TEXT,
           allowNull: false,
+      },
+      not_read_userCnt: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       }
     },{
       sequelize,

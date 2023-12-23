@@ -3,12 +3,14 @@ import { Model, DataTypes } from 'sequelize';
 interface ChattingAttributes {
     chat_id: number;
     message: string;
+    not_read_userCnt: number;
 }
 
 
 export default class Chatting extends Model<ChattingAttributes> {
     declare chat_id: number;
     declare message: string;
+    declare not_read_userCnt: number;
 }
 
 // class User extends Model {}
