@@ -19,7 +19,7 @@ const read_myInfo = async (req: Request, res: Response, next: NextFunction) => {
 const read_UserAll = async(req: Request, res: Response, next:NextFunction) => {
     try{
         const page: number = Number(req.query.page) || 0;
-        const size = Number(req.query.size) || 20;
+        const size: number = Number(req.query.size) || 20;
     
         const userList = await read_UserAllList(page, size); 
         if(userList){

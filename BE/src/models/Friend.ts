@@ -4,7 +4,7 @@ interface FriendsAttributes{
     id: number | null;
     friend_id: number;
     user_id: number;
-    friend_name: string;
+    friend_name: string | null;
 }
 
 export default class Friends extends Model<FriendsAttributes>{

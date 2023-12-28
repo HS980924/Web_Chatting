@@ -1,12 +1,12 @@
 import { Model } from 'sequelize';
 
 interface ParticipantAttributes{
-    id: number;
+    id: number | null;
     room_id: number;
     user_id: number;
     room_title: string;
-    not_read_messageCnt: number;
-    last_read_messageId: number;
+    not_read_messageCnt: number | null;
+    last_read_messageId: number | null;
 }
 
 export default class Participant extends Model<ParticipantAttributes>{

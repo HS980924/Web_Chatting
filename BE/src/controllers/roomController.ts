@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { read_myRooms } from "../services/roomService";
+import { read_myRooms, create_RoomService, read_myRoomIdentifier } from "../services/roomService";
+import { create_Participant } from "../services/participantService";
 
 
 const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) => {
@@ -8,9 +9,9 @@ const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) 
         const page = Number(req.query.page);
         const size = Number(req.query.size);
         
-        const user = await read_myRooms(user_id, page, size);
-        if(user){
-            return res.status(200).json({status:200, msg:"채팅방 목록 조회 성공", data:user});
+        const rooms = await read_myRooms(user_id, page, size);
+        if(rooms){
+            return res.status(200).json({status:200, msg:"채팅방 목록 조회 성공", data:rooms});
         }
         return res.status(400).json({status:400, msg:"채팅방 목록 조회 실패"});
     }catch(e){
@@ -20,14 +21,32 @@ const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) 
 
 const create_Room = async(req: Request, res: Response, next:NextFunction) => {
     try{
-        const page: number = Number(req.query.page) || 0;
-        const size: number = Number(req.query.size) || 20;
-    
-        const userList = await read_UserAllList(page, size); 
-        if(userList){
-            return res.status(200).json({status:200, msg:"모든 유저 정보 조회 성공", data:userList});
+        const user_id = req.user_id;
+        let { title, members } = req.body;
+
+        if(members.length == 1){
+            title = members[0].friend_name;
         }
-        return res.status(400).json({status:400, msg:"유저 정보 조회 실패"});
+
+        members.push({friend_id: user_id, friend_name: null});
+        members.sort((a:any, b:any) => a.friend_id - b.friend_id);
+        const memberIdList = members.map((user:any) => user.friend_id); 
+        const identifier = memberIdList.join(',');
+
+        const isRoom = await read_myRoomIdentifier(identifier);
+
+        if(isRoom){
+            return res.status(400).json({status:400, msg:"이미 방이 존재합니다."});
+        }
+        const room = await create_RoomService(title, identifier);
+        if(room){
+            const participant = await create_Participant(room.room_id, title, members);
+            if(participant){
+                return res.status(200).json({status:200, msg:"방 생성 완료"});
+            }
+            return res.status(400).json({status:400, msg:"참가자 추가 에러"});
+        }
+        return res.status(400).json({status: 400, msg:"방 생성 실패"});
     }catch(e){
         return res.status(500).json({status:500, msg:"서버 내부 에러"});
     }
@@ -37,10 +56,6 @@ const update_Room = async(req: Request, res: Response, next:NextFunction) => {
     try{
         const user_id: number = Number(req.params.id);
         
-        const user = await read_UserId(user_id); 
-        if(user){
-            return res.status(200).json({status:200, msg:"유저 정보 조회 성공", data:user});
-        }
         return res.status(400).json({status:400, msg:"존재하지 않는 유저입니다."});
     }catch(e){
         return res.status(500).json({status:500, msg:"서버 내부 에러"});

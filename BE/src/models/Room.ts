@@ -4,7 +4,7 @@ interface RoomAttributes{
     room_id: number | null;
     title: string;
     identifier: string;
-    last_message: string;
+    last_message: string | null;
 }
 
 export default class Room extends Model<RoomAttributes> {

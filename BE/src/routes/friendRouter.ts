@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { query, param } from 'express-validator';
+import { query, param, body } from 'express-validator';
 import { validationCheckError } from '../middlewears/validationCheck';
 import { authJWT } from '../middlewears/tokenCheck';
-import { create_MyFriend, read_MyFriend } from '../controllers/friendController';
+import { read_MyFriend, create_IdMyFriend, create_EmailMyFriend } from '../controllers/friendController';
 
 
 const router:Router = Router();
@@ -25,13 +25,21 @@ router.get('/me',[
     read_MyFriend    
 )
 
-// 친구 등록 하기
+/** 이메일로 친구 등록 하기 */ 
+router.post('/',[
+    body("email").isEmail(),
+    validationCheckError],
+    authJWT,
+    create_EmailMyFriend    
+)
+
+/** Id로 친구 등록 하기 */ 
 router.post('/:id',[
     param("id").isInt(),
     validationCheckError
     ],
     authJWT,
-    create_MyFriend,
+    create_IdMyFriend,
 );
 
 export default router;

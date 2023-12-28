@@ -44,7 +44,7 @@ const login = async(req: Request, res: Response, next:NextFunction)  => {
         return res.status(401).json({status:401, msg:"등록되지 않은 이메일입니다."});
     }catch(e){
         console.log(e);
-        return res.status(500).json(e);
+        return res.status(500).json({status:500, msg: "내부 서버 에러입니다."});
     }
 }
 
