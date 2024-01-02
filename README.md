@@ -7,6 +7,10 @@
        - 라이브러리
        - 프레임워크
      - BE
+      - Node.js v20.10.0
+      - express v4.18.2
+      - MySQL v
+      - sequelize v6.35.1
          - 라이브러리
          - DB
          - 프레임워크
