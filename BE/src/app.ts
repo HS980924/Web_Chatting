@@ -1,4 +1,5 @@
 import express, { Request, Response, json, urlencoded } from 'express';
+import { createServer } from "http";
 import morgan from 'morgan';
 import cors from 'cors';
 import * as DB from "./models";
@@ -6,6 +7,7 @@ import auth from './routes/authRouter';
 import user from './routes/userRouter';
 import friend from './routes/friendRouter';
 import room from './routes/roomRouter';
+import { Websocket } from './socket/index';
 
 const app: express.Application = express();
 
@@ -26,7 +28,10 @@ app.get("/",(req: Request,res: Response)=>{
     res.send("Web chatting BE Server");
 });
 
-app.listen((app.get('port')), async()=>{
+
+const httpServer = createServer(app);
+
+const server = httpServer.listen((app.get('port')), async()=>{
 	// db.sequelize를 불러와 sync 메서드를 사용해 서버 실행 시 MySQL과 연동되도록 설정
 	// force:false -> 서버 실행 시 테이블을 재생성하지 않겠다.
 	// force:true -> 서버 실행 시 테이블을 재생성
@@ -41,3 +46,5 @@ app.listen((app.get('port')), async()=>{
 	
 	console.log("server start");
 });
+
+Websocket(server, app);
