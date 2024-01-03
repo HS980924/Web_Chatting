@@ -121,6 +121,14 @@ export function init(): Sequelize{
       not_read_userCnt: {
         type: DataTypes.INTEGER,
         allowNull: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      room_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       }
     },{
       sequelize,

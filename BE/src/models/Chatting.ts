@@ -1,9 +1,11 @@
 import { Model, DataTypes } from 'sequelize';
 
 interface ChattingAttributes {
-    chat_id: number;
+    chat_id: number | null;
     message: string;
     not_read_userCnt: number;
+    room_id: number;
+    user_id: number;
 }
 
 
@@ -11,25 +13,9 @@ export default class Chatting extends Model<ChattingAttributes> {
     declare chat_id: number;
     declare message: string;
     declare not_read_userCnt: number;
+    declare room_id: number;
+    declare user_id: number;
 }
-
-// class User extends Model {}
-
-// User.init({
-//     firstName: {
-//         type: DataTypes.STRING,
-//         allowNull: false
-//     },
-//     lastName: {
-//         type: DataTypes.STRING
-//         // allowNull defaults to true
-//     }
-// }, {
-//     sequelize, // We need to pass the connection instance
-//     modelName: 'User' // We need to choose the model name
-// });
-
-
 
 
 // module.exports = (sequelize: any, DataTypes: any) => {
