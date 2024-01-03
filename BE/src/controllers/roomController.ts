@@ -64,8 +64,9 @@ const update_Room = async(req: Request, res: Response, next:NextFunction) => {
 
 const getOut_Room = async(req: Request, res:Response, next:NextFunction) => {
     try{
-        const friend_id = req.params.friendId;
-        const user_id = req.user_id;
+        const user_id: number = Number(req.user_id);
+        
+
 
     }catch(e){
         console.log(e);
