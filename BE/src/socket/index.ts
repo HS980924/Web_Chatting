@@ -17,8 +17,9 @@ export const Websocket = ( server:http.Server, app: express.Application ) => {
         const ip:string | string[] | undefined = req.headers['x-forwarded-for'];
         console.log("New client connection!", ip, socket.id);
         disconnect(socket, ip);
-        creaet_message(socket, io);
         error(socket);
+        creaet_message(socket, io);
+        read_message(socket, io);
     });
 };
 
@@ -32,7 +33,7 @@ const error = (socket: Socket) => {
     socket.on('error', (error)=>{
         console.error(error);
     });
-}
+};
 
 const creaet_message = (socket: Socket, io: Server) => {
     socket.on('message', async (req) => {
@@ -55,4 +56,10 @@ const creaet_message = (socket: Socket, io: Server) => {
         
     });
 };
+
+const read_message = (socket: Socket, io: Server)=> {
+    socket.on('read', async (req) => {
+        const { room_id, user_id,  } = req;
+    });
+}
 
