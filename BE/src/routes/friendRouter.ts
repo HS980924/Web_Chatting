@@ -2,7 +2,12 @@ import { Router } from 'express';
 import { query, param, body } from 'express-validator';
 import { validationCheckError } from '../middlewears/validationCheck';
 import { authJWT } from '../middlewears/tokenCheck';
-import { read_MyFriend, create_IdMyFriend, create_EmailMyFriend } from '../controllers/friendController';
+import { 
+    read_MyFriend, 
+    create_IdMyFriend, 
+    create_EmailMyFriend, 
+    read_recommendFriends 
+} from '../controllers/friendController';
 
 
 const router:Router = Router();
@@ -23,7 +28,12 @@ router.get('/me',[
     ],
     authJWT,
     read_MyFriend    
-)
+);
+
+router.get('/recommend',
+    authJWT,
+    read_recommendFriends    
+);
 
 /** 이메일로 친구 등록 하기 */ 
 router.post('/',[

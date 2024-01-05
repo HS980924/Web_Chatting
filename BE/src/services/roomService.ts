@@ -25,8 +25,6 @@ export const read_myRooms = async (user_id:number, page:number, size:number) => 
             }],
             limit: size,
             offset: page,
-            // order: [[User, 'username', 'ASC']],
-            // order: [],
         });
         return rooms;
     }catch(e){ 
@@ -36,12 +34,12 @@ export const read_myRooms = async (user_id:number, page:number, size:number) => 
 
 export const read_myRoomIdentifier = async(identifier: string) => {
     try{
-        const room = await Room.findOne({where : {identifier}});
+        const room = await Room.findOne({ where : { identifier } });
         return room;
     }catch(e){
         throw e;
     }
-}
+};
 
 export const create_RoomService = async (title: string, identifier:string) => {
     try{  
@@ -53,4 +51,31 @@ export const create_RoomService = async (title: string, identifier:string) => {
     }catch(e){
         throw e;
     }
+};
+
+/** 채팅 방 퇴장 메소드 */
+export const getout_Room = async(room_id: number, user_id:number) => {
+    try{
+        await Participant.destroy({where: {
+            room_id: room_id,
+            user_id: user_id,
+        }})
+    }catch(e){
+        throw e;
+    }
 }
+
+/** 채팅 방 삭제 메소드 */
+export const delete_Room = async(room_id: number) => {
+    try{
+        
+        const deletedRoom = await Room.destroy({
+            where: { room_id: room_id}
+        });
+
+        return deletedRoom;
+    }catch(e){
+        throw e;
+    }
+};
+

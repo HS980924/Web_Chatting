@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { read_UserId, read_UserAllList } from "../services/userService";
 
 
-const read_myInfo = async (req: Request, res: Response, next: NextFunction) => {
+export const read_myInfo = async (req: Request, res: Response, next: NextFunction) => {
     try{
         const user_id = Number(req.user_id);
         
@@ -16,7 +16,7 @@ const read_myInfo = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
-const read_UserAll = async(req: Request, res: Response, next:NextFunction) => {
+export const read_UserAll = async(req: Request, res: Response, next:NextFunction) => {
     try{
         const page: number = Number(req.query.page) || 0;
         const size: number = Number(req.query.size) || 20;
@@ -31,7 +31,7 @@ const read_UserAll = async(req: Request, res: Response, next:NextFunction) => {
     }
 }
 
-const read_User = async(req: Request, res: Response, next:NextFunction) => {
+export const read_User = async(req: Request, res: Response, next:NextFunction) => {
     try{
         const user_id: number = Number(req.params.id);
         
@@ -45,7 +45,7 @@ const read_User = async(req: Request, res: Response, next:NextFunction) => {
     }
 }
 
-const create_UserFriend = async(req: Request, res:Response, next:NextFunction) => {
+export const create_UserFriend = async(req: Request, res:Response, next:NextFunction) => {
     try{
         const friend_id = req.params.friendId;
         const user_id = req.user_id;
@@ -56,8 +56,14 @@ const create_UserFriend = async(req: Request, res:Response, next:NextFunction) =
     }
 }
 
-export {
-    read_myInfo,
-    read_UserAll,
-    read_User,
+export const read_recommendFriend = async(req: Request, res:Response, next:NextFunction) => {
+    try{
+        const user_id = req.user_id;
+        
+        
+
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({status:500, msg:"서버 내부 에러"});
+    }
 }

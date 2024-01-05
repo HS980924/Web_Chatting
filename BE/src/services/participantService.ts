@@ -40,3 +40,13 @@ export const read_countParticipant = async(room_id: number)=>{
         throw e;
     }
 } 
+
+export const delete_Participant = async(room_id: number, user_id:number) => {
+    try{
+        const deletedParti = await Participant.destroy({where: {user_id: user_id}});      
+        
+        return deletedParti;
+    }catch(e){
+        throw e;
+    }
+};

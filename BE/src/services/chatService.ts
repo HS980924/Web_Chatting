@@ -34,7 +34,7 @@ export const create_chatting = async (room_id:number, user_id:number, message:st
     }
 }
 
-export const delete_chatting = async (chat_id:number, user_id: number) => {
+export const delete_chatOne = async (chat_id:number, user_id: number) => {
     try{
         const deleteMessage = await Chatting.destroy({
             where:{ 
@@ -43,6 +43,15 @@ export const delete_chatting = async (chat_id:number, user_id: number) => {
             }
         });
         return deleteMessage;
+    }catch(e){
+        throw e;
+    }
+}
+
+export const delete_chatAll = async (room_id: number) => {
+    try{
+        const deletedChat = await Chatting.destroy({where : { room_id: room_id}});
+        return deletedChat;
     }catch(e){
         throw e;
     }

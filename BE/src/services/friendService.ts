@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+import Sequelize, { Op } from 'sequelize';
 import Friends from "../models/Friend";
 import User from "../models/User";
 
@@ -50,6 +50,32 @@ export const read_myFreinds = async(user_id: number, page: number, size:number) 
             order: [[User, 'username', 'ASC']],
         });
         return friends
+    }catch(e){
+        console.log(e);
+        throw e;
+    }
+};
+
+export const read_recommendFriend = async(user_id: number) =>{ 
+    try{
+        const recommendFriends = await User.findAndCountAll({
+            where : { '$Friends.user_id$': { [Op.ne] : user_id }},
+            include: [{
+                model: Friends,
+                // required: false,
+                where: {
+                    user_id: user_id,
+                },
+            }],
+            // where: Sequelize.where(
+            //     Sequelize.col('User.user_id'),
+            //     '!=',
+            //     Sequelize.col('Friends.friend_id'),
+            // ),
+            attributes: ["user_id", "username", "profileImgUrl", "introduce"],
+            order: [['username', 'ASC']]
+        });
+        return recommendFriends;
     }catch(e){
         console.log(e);
         throw e;
