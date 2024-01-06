@@ -58,20 +58,16 @@ export const read_myFreinds = async(user_id: number, page: number, size:number) 
 
 export const read_recommendFriend = async(user_id: number) =>{ 
     try{
+
+        const friendList = await Friends.findAll({
+            where: {user_id: user_id},
+            attributes: ['friend_id'],
+        }); 
+
+        const friends = friendList.map(data => data.friend_id);
+
         const recommendFriends = await User.findAndCountAll({
-            where : { '$Friends.user_id$': { [Op.ne] : user_id }},
-            include: [{
-                model: Friends,
-                // required: false,
-                where: {
-                    user_id: user_id,
-                },
-            }],
-            // where: Sequelize.where(
-            //     Sequelize.col('User.user_id'),
-            //     '!=',
-            //     Sequelize.col('Friends.friend_id'),
-            // ),
+            where : { user_id: { [Op.notIn] : friends }},
             attributes: ["user_id", "username", "profileImgUrl", "introduce"],
             order: [['username', 'ASC']]
         });
