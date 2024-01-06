@@ -1,6 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { read_UserEmail, read_UserId } from "../services/userService";
-import { check_myFriend, create_friend, read_myFreinds, read_recommendFriend } from "../services/friendService";
+import { 
+    check_myFriend, 
+    create_friend, 
+    read_myFreinds, 
+    read_myFriend, 
+    read_recommendFriend } from "../services/friendService";
 
 const read_MyFriend = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -9,6 +14,21 @@ const read_MyFriend = async (req: Request, res: Response, next: NextFunction) =>
         const size: number = Number(req.query.size) || 20;
         
         const friends = await read_myFreinds(user_id, page, size);
+        if(friends){
+            return res.status(200).json({status:200, msg:"친구 목록 조회 성공", data:friends});
+        }
+        return res.status(400).json({status:400, msg:"친구 목록 조회 실패"});
+    }catch(e){
+        return res.status(500).json({status:500, msg:"서버 내부 에러"});
+    }
+}
+
+const read_Friend = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const user_id: number = Number(req.user_id);
+        const friend_id: number = Number(req.params.id);
+        
+        const friends = await read_myFriend(user_id, friend_id);
         if(friends){
             return res.status(200).json({status:200, msg:"친구 목록 조회 성공", data:friends});
         }
@@ -83,6 +103,7 @@ export const read_recommendFriends = async (req: Request, res: Response, next: N
 
 export {
     read_MyFriend,
+    read_Friend,
     create_IdMyFriend,
     create_EmailMyFriend
 }

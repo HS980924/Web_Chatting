@@ -22,7 +22,7 @@ export const check_myFriend = async(user_id:number, friend_id:number) => {
             where: {
                 user_id: user_id,
                 friend_id: friend_id,
-            }
+            },
         });
         return friend;
     }catch(e){
@@ -30,6 +30,24 @@ export const check_myFriend = async(user_id:number, friend_id:number) => {
     }
 }
 
+export const read_myFriend = async(user_id:number, friend_id:number) => {
+    try{
+        const friend = await Friends.findOne({
+            where: {
+                user_id: user_id,
+                friend_id: friend_id,
+            },
+            include: [{
+                model: User,
+                attributes: ["email", "profileImgUrl","backgroundImgUrl","introduce"],
+            }],
+            attributes: ["friend_id", "friend_name"]
+        });
+        return friend;
+    }catch(e){
+        throw e;
+    }
+}
 export const read_myFreinds = async(user_id: number, page: number, size:number) =>{ 
     try{
         const friends = await Friends.findAndCountAll({
@@ -72,6 +90,7 @@ export const read_recommendFriend = async(user_id: number) =>{
             order: [['username', 'ASC']]
         });
         return recommendFriends;
+
     }catch(e){
         console.log(e);
         throw e;

@@ -6,19 +6,13 @@ import {
     read_MyFriend, 
     create_IdMyFriend, 
     create_EmailMyFriend, 
-    read_recommendFriends 
+    read_recommendFriends, 
+    read_Friend
 } from '../controllers/friendController';
 
 
 const router:Router = Router();
 
-// 특정 친구 조회 하기
-// 굳이 만들어야 하나?  user 조회 기능도 있는데?
-router.get(':id',[
-    param("id").isInt(),
-    validationCheckError],
-    authJWT,
-);
 
 // 내 친구 목록 불러오기
 router.get('/me',[
@@ -28,6 +22,14 @@ router.get('/me',[
     ],
     authJWT,
     read_MyFriend    
+);
+// 특정 친구 조회 하기
+// 굳이 만들어야 하나?  user 조회 기능도 있는데?
+router.get('/:id',[
+    param("id").isInt(),
+    validationCheckError],
+    authJWT,
+    read_Friend
 );
 
 router.get('/recommend',
