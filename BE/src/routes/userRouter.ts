@@ -3,7 +3,6 @@ import { query, param } from 'express-validator';
 import { validationCheckError } from '../middlewears/validationCheck';
 import { authJWT } from '../middlewears/tokenCheck';
 import { read_myInfo, read_UserAll, read_User } from '../controllers/userController';
-import { read_UserId } from '../services/userService';
 
 
 const router:Router = Router();
@@ -17,11 +16,11 @@ router.get('/all',[
     authJWT, 
     read_UserAll);
 
-router.get(':id',[
+router.get('/:id',[
     param("id").isInt(),
     validationCheckError],
     authJWT,
-    read_UserId);
+    read_User);
 
 
 export default router;
