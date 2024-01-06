@@ -3,9 +3,11 @@ import { read_UserEmail, read_UserId } from "../services/userService";
 import { 
     check_myFriend, 
     create_friend, 
+    delete_myFriend, 
     read_myFreinds, 
     read_myFriend, 
-    read_recommendFriend } from "../services/friendService";
+    read_recommendFriend, 
+    update_myFriend} from "../services/friendService";
 
 const read_MyFriend = async (req: Request, res: Response, next: NextFunction) => {
     try{
@@ -99,6 +101,40 @@ export const read_recommendFriends = async (req: Request, res: Response, next: N
     }
 }
 
+export const deleteMyFriend = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const user_id = Number(req.user_id);
+        const friend_id = Number(req.params.id);
+
+        const check = await check_myFriend(user_id, friend_id);
+        if(check){
+            const deleteFriend = await delete_myFriend(user_id, friend_id);
+            if(deleteFriend){
+                return res.status(200).json({status:200, msg:"친구 삭제 성공"});
+            }
+            return res.status(400).json({status:400, msg:"친구 삭제 실패"}); 
+        }   
+        return res.status(400).json({status:400, msg:"현재 해당 유저는 친구가 아닙니다."});
+    }catch(e){
+        return res.status(500).json({status:500, msg:"서버 내부 에러"});
+    }
+};
+
+export const updateMyFriend = async (req: Request, res: Response, next: NextFunction) => {
+    try{
+        const user_id = Number(req.user_id);
+        const friend_id = Number(req.params.id);
+        const { friend_name } = req.body;
+
+        const updatedFriend = await update_myFriend(user_id, friend_id, friend_name);
+        if(updatedFriend){
+            return res.status(200).json({status:200, msg:"친구 정보 수정 성공", data:updatedFriend});
+        }
+        return res.status(400).json({status:400, msg:"친구 정보 수정 실패"});
+    }catch(e){
+        return res.status(500).json({status:500, msg:"서버 내부 에러"});
+    }
+}
 
 
 export {

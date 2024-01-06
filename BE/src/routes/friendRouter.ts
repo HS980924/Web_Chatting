@@ -7,14 +7,16 @@ import {
     create_IdMyFriend, 
     create_EmailMyFriend, 
     read_recommendFriends, 
-    read_Friend
+    read_Friend,
+    deleteMyFriend,
+    updateMyFriend
 } from '../controllers/friendController';
 
 
 const router:Router = Router();
 
 
-// 내 친구 목록 불러오기
+/** 내 친구 목록 조회 */ 
 router.get('/me',[
     query("page").isInt(),
     query("size").isInt(),
@@ -23,8 +25,8 @@ router.get('/me',[
     authJWT,
     read_MyFriend    
 );
-// 특정 친구 조회 하기
-// 굳이 만들어야 하나?  user 조회 기능도 있는데?
+
+/** 내 친구 조회 */
 router.get('/:id',[
     param("id").isInt(),
     validationCheckError],
@@ -32,6 +34,8 @@ router.get('/:id',[
     read_Friend
 );
 
+/** 추천 친구 조회 */
+// 모든 유저에서 내 친구 목록을 뺀 나머지
 router.get('/recommend',
     authJWT,
     read_recommendFriends    
@@ -53,5 +57,24 @@ router.post('/:id',[
     authJWT,
     create_IdMyFriend,
 );
+
+/** 친구 삭제 */ 
+router.delete('/:id',[
+    param("id").isInt(),
+    validationCheckError
+    ],
+    authJWT,
+    deleteMyFriend,
+);
+
+/** 친구 삭제 */ 
+router.put('/:id',[
+    param("id").isInt(),
+    body("friend_name").isString(),
+    validationCheckError
+    ],
+    authJWT,
+    updateMyFriend,
+)
 
 export default router;

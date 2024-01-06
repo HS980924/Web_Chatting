@@ -96,3 +96,33 @@ export const read_recommendFriend = async(user_id: number) =>{
         throw e;
     }
 }
+
+export const update_myFriend = async(user_id:number, friend_id:number, name:string) => {
+    try{
+        const updatedFriend = await Friends.update(
+            { friend_name: name },{
+            where:{ 
+                user_id: user_id,
+                friend_id: friend_id,
+            },
+        });
+        return updatedFriend;
+    }catch(e){
+        throw e;
+    }
+}
+
+export const delete_myFriend = async(user_id:number, friend_id:number) => {
+    try{
+        const deleteFriend = await Friends.destroy({
+            where: {
+                user_id: user_id,
+                friend_id: friend_id
+            },
+        });
+        console.log(deleteFriend);
+        return deleteFriend;
+    }catch(e){
+        throw e;
+    }
+}
