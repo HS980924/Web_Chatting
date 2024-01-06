@@ -99,14 +99,19 @@ export const read_recommendFriend = async(user_id: number) =>{
 
 export const update_myFriend = async(user_id:number, friend_id:number, name:string) => {
     try{
-        const updatedFriend = await Friends.update(
-            { friend_name: name },{
+        const updatedFriend = await Friends.findOne({
             where:{ 
                 user_id: user_id,
                 friend_id: friend_id,
             },
+            attributes: ["id","friend_id","friend_name"]
         });
-        return updatedFriend;
+        if(updatedFriend){
+            updatedFriend.friend_name = name;
+            await updatedFriend.save();
+            return updatedFriend;
+        }
+        return;
     }catch(e){
         throw e;
     }
