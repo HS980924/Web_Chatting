@@ -114,7 +114,7 @@ export const deleteMyFriend = async (req: Request, res: Response, next: NextFunc
             }
             return res.status(400).json({status:400, msg:"친구 삭제 실패"}); 
         }   
-        return res.status(400).json({status:400, msg:"현재 해당 유저는 친구가 아닙니다."});
+        return res.status(400).json({status:400, msg:"해당 유저는 현재 친구가 아닙니다."});
     }catch(e){
         return res.status(500).json({status:500, msg:"서버 내부 에러"});
     }
