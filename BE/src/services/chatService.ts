@@ -12,7 +12,7 @@ export const read_chattings = async (room_id:number, page:number) => {
             },
             limit: 30,
             offset: page,
-            order: [["created_at","DESC"],]
+            order: [["createdAt","DESC"],]
         });
         return messages;
     }catch(e){ 

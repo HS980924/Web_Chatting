@@ -129,6 +129,10 @@ export function init(): Sequelize{
       room_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: true,
       }
     },{
       sequelize,
