@@ -18,6 +18,7 @@ export default class User extends Model<UserAttributes> {
     declare profileImgUrl: string;
     declare backgroundImgUrl: string;
     declare introduce: string;
+    static user_id: any;
 }
 
 // module.exports = (sequelize: any, DataTypes: any) => {

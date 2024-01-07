@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { query, param, body } from 'express-validator';
 import { validationCheckError } from '../middlewears/validationCheck';
 import { authJWT } from '../middlewears/tokenCheck';
-import { create_Room, read_myAllRooms, } from '../controllers/roomController';
+import { create_Room, read_myAllRooms, updateRoom, } from '../controllers/roomController';
 
 
 const router:Router = Router();
@@ -20,6 +20,15 @@ router.post('/',[
 router.get('/all/me',
     authJWT,
     read_myAllRooms
+);
+
+/** 방 정보 수정 */
+router.put("/:id",[
+    param("id").isInt(),
+    body("room_title").isString(),
+    validationCheckError ],
+    authJWT,
+    updateRoom,
 );
 
 

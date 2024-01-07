@@ -14,6 +14,31 @@ export const read_MyParticipantList = async (user_id:number, page:number, size:n
     }
 };
 
+export const read_countParticipant = async(room_id: number)=>{
+    try{
+        const userCnt = await Participant.count({where:{ room_id: room_id }});
+        
+        return userCnt;
+    }catch(e){
+        throw e;
+    }
+};
+
+export const check_myRoom = async(room_id: number, user_id:number)=>{
+    try{
+        const userCnt = await Participant.count({
+            where:{ 
+                room_id: room_id,
+                user_id: user_id,
+            }
+        });
+        
+        return userCnt;
+    }catch(e){
+        throw e;
+    }
+}
+
 export const create_Participant = async(room_id: number, title:string, members: any) => {
     try{
         const result = await Promise.all(
@@ -29,17 +54,7 @@ export const create_Participant = async(room_id: number, title:string, members: 
     }catch(e){
         throw e;
     }
-}
-
-export const read_countParticipant = async(room_id: number)=>{
-    try{
-        const userCnt = await Participant.count({where:{ room_id: room_id }});
-        
-        return userCnt;
-    }catch(e){
-        throw e;
-    }
-} 
+};
 
 export const delete_Participant = async(room_id: number, user_id:number) => {
     try{

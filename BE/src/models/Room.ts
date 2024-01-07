@@ -13,6 +13,7 @@ export default class Room extends Model<RoomAttributes> {
     declare identifier: string;
     declare last_message: string;
 }
+
 // module.exports = (sequelize: any, DataTypes: any) => {
 //     class Room extends Model<RoomAttributes> implements RoomAttributes{
 //         room_id!: number;

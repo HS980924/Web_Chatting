@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { read_myRooms, create_RoomService, read_myRoomIdentifier } from "../services/roomService";
-import { create_Participant } from "../services/participantService";
+import { read_myRooms, create_RoomService, read_myRoomIdentifier, update_Room } from "../services/roomService";
+import { check_myRoom, create_Participant } from "../services/participantService";
 
 
 const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,6 +15,7 @@ const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) 
         }
         return res.status(400).json({status:400, msg:"채팅방 목록 조회 실패"});
     }catch(e){
+        console.log(e);
         return res.status(500).json({status:500, msg:"서버 내부 에러"});
     }
 }
@@ -52,11 +53,22 @@ const create_Room = async(req: Request, res: Response, next:NextFunction) => {
     }
 }
 
-const update_Room = async(req: Request, res: Response, next:NextFunction) => {
+export const updateRoom = async(req: Request, res: Response, next:NextFunction) => {
     try{
-        const user_id: number = Number(req.params.id);
-        
-        return res.status(400).json({status:400, msg:"존재하지 않는 유저입니다."});
+        const user_id: number = Number(req.user_id);
+        const room_id: number = Number(req.params.id);
+        const { room_title } = req.body;
+
+        const check = await check_myRoom(room_id, user_id);
+
+        if(check){
+            const result = await update_Room(room_id, user_id, room_title);
+            if(result){
+                return res.status(200).json({status:200, msg:"채팅 방 제목 수정 완료"}, );
+            }
+            return res.status(400).json({status:400, msg:"채팅 방 제목 수정 실패"});
+        }
+        return res.status(400).json({status:400, msg:"해당 방은 존재하지 않는 방입니다."});
     }catch(e){
         return res.status(500).json({status:500, msg:"서버 내부 에러"});
     }

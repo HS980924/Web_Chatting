@@ -26,6 +26,13 @@ router.get('/me',[
     read_MyFriend    
 );
 
+/** 추천 친구 조회 */
+// 모든 유저에서 내 친구 목록을 뺀 나머지
+router.get('/recommend',
+    authJWT,
+    read_recommendFriends    
+);
+
 /** 내 친구 조회 */
 router.get('/:id',[
     param("id").isInt(),
@@ -34,12 +41,6 @@ router.get('/:id',[
     read_Friend
 );
 
-/** 추천 친구 조회 */
-// 모든 유저에서 내 친구 목록을 뺀 나머지
-router.get('/recommend',
-    authJWT,
-    read_recommendFriends    
-);
 
 /** 이메일로 친구 등록 하기 */ 
 router.post('/',[
