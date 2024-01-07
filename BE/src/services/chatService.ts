@@ -34,12 +34,37 @@ export const create_chatting = async (room_id:number, user_id:number, message:st
     }
 }
 
-export const delete_chatOne = async (chat_id:number, user_id: number) => {
+export const update_chatOne = async (room_id: number, chat_id: number, user_id:number, message:string) => {
+    try{
+        const updatedMessage = await Chatting.update({
+            message: message
+        },{
+            where: {
+                room_id: room_id,
+                chat_id: chat_id,
+                user_id: user_id,
+                createdAt: {
+                    [Op.gt]: new Date(+new Date() -  5 * 60 * 1000)
+                },
+            }
+        });
+
+        return updatedMessage;
+    }catch(e){
+        throw e;
+    }
+}
+
+export const delete_chatOne = async (room_id: number, chat_id:number, user_id: number) => {
     try{
         const deleteMessage = await Chatting.destroy({
             where:{ 
+                room_id: room_id,
                 chat_id: chat_id,
                 user_id: user_id,
+                createdAt: {
+                    [Op.gt]: new Date(+new Date() -  5 * 60 * 1000)
+                },
             }
         });
         return deleteMessage;

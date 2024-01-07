@@ -6,6 +6,7 @@ interface ChattingAttributes {
     not_read_userCnt: number;
     room_id: number;
     user_id: number;
+    createdAt: Date | null;
 }
 
 
@@ -15,6 +16,7 @@ export default class Chatting extends Model<ChattingAttributes> {
     declare not_read_userCnt: number;
     declare room_id: number;
     declare user_id: number;
+    declare createdAt: Date;
 }
 
 
