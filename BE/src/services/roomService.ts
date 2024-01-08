@@ -78,7 +78,7 @@ export const getout_Room = async(room_id: number, user_id:number) => {
         await Participant.destroy({where: {
             room_id: room_id,
             user_id: user_id,
-        }})
+        }});
     }catch(e){
         throw e;
     }

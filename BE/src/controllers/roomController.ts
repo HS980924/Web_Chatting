@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { read_myRooms, create_RoomService, read_myRoomIdentifier, update_Room } from "../services/roomService";
-import { check_myRoom, create_Participant } from "../services/participantService";
+import { read_myRooms, create_RoomService, read_myRoomIdentifier, update_Room, delete_Room } from "../services/roomService";
+import { check_myRoom, create_Participant, delete_Participant, read_countParticipant } from "../services/participantService";
+import { delete_chatAll } from "../services/chatService";
 
 
 const read_myAllRooms = async (req: Request, res: Response, next: NextFunction) => {
@@ -64,6 +65,7 @@ export const updateRoom = async(req: Request, res: Response, next:NextFunction) 
         if(check){
             const result = await update_Room(room_id, user_id, room_title);
             if(result){
+                console.log(result);
                 return res.status(200).json({status:200, msg:"채팅 방 제목 수정 완료"}, );
             }
             return res.status(400).json({status:400, msg:"채팅 방 제목 수정 실패"});
@@ -86,10 +88,21 @@ const getOut_Room = async(req: Request, res:Response, next:NextFunction) => {
     }
 }
 
-const delete_Room = async(req: Request, res:Response, next:NextFunction) => {
+export const deleteRoom = async(req: Request, res:Response, next:NextFunction) => {
     try{
-        const friend_id = req.params.friendId;
-        const user_id = req.user_id;
+        const user_id = Number(req.user_id);
+        const room_id = Number(req.params.id);
+
+        const deletedUser = await delete_Participant(room_id, user_id);
+        if(deletedUser){
+            const roomUserCnt = await read_countParticipant(room_id);
+            if(roomUserCnt <= 0){
+                const deletedRoom = await delete_Room(room_id);
+                const deletedMessage = await delete_chatAll(room_id);
+            }
+            return res.status(200).json({status:200, msg:"방에서 나가셨습니다."});
+        }
+        return res.status(400).json({status:400, msg:"방이 존재하지 않거나 존재하지 않은 유저입니다."});
 
     }catch(e){
         console.log(e);
@@ -102,5 +115,4 @@ export {
     create_Room,
     update_Room,
     getOut_Room,
-    delete_Room,
 }

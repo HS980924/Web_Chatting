@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { query, param, body } from 'express-validator';
 import { validationCheckError } from '../middlewears/validationCheck';
 import { authJWT } from '../middlewears/tokenCheck';
-import { create_Room, read_myAllRooms, updateRoom, } from '../controllers/roomController';
+import { create_Room, deleteRoom, read_myAllRooms, updateRoom, } from '../controllers/roomController';
 
 
 const router:Router = Router();
@@ -31,5 +31,12 @@ router.put("/:id",[
     updateRoom,
 );
 
+
+router.delete("/:id",[
+    param("id").isInt(),
+    validationCheckError ],
+    authJWT,
+    deleteRoom
+    )
 
 export default router;
